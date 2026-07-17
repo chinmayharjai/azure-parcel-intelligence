@@ -1,0 +1,1 @@
+{"name":"ls_keyvault_reference","properties":{"type":"AzureKeyVault","typeProperties":{"baseUrl":"https://<key-vault-name>.vault.azure.net/"}}}

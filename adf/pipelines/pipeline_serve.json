@@ -1,0 +1,7 @@
+{
+  "name": "pl_parcel_validate_and_serve",
+  "properties": {"activities": [
+    {"name": "Data quality gate", "type": "DatabricksNotebook", "policy": {"retry": 3, "retryIntervalInSeconds": 30}, "typeProperties": {"notebookPath": "/Shared/quality/dq_checks"}},
+    {"name": "Copy SLA gold to Azure SQL", "type": "Copy", "dependsOn": [{"activity": "Data quality gate", "dependencyConditions": ["Succeeded"]}], "typeProperties": {"source": {"type": "AzureDatabricksDeltaLakeSource"}, "sink": {"type": "AzureSqlSink"}}},
+    {"name": "Upsert latest state to Cosmos", "type": "AzureFunctionActivity", "dependsOn": [{"activity": "Data quality gate", "dependencyConditions": ["Succeeded"]}]}
+  ]}}

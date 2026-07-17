@@ -1,0 +1,6 @@
+{
+  "name": "pl_parcel_ingest_bronze",
+  "properties": {"parameters": {"run_date": {"type": "String"}}, "activities": [
+    {"name": "Copy landing scans to bronze", "type": "Copy", "policy": {"retry": 3, "retryIntervalInSeconds": 30}, "typeProperties": {"source": {"type": "BinarySource"}, "sink": {"type": "BinarySink"}}},
+    {"name": "Copy seller master (self-hosted IR in production)", "type": "Copy", "dependsOn": [{"activity": "Copy landing scans to bronze", "dependencyConditions": ["Succeeded"]}], "policy": {"retry": 3, "retryIntervalInSeconds": 30}, "typeProperties": {"source": {"type": "AzureSqlSource"}, "sink": {"type": "DelimitedTextSink"}}}
+  ]}}
